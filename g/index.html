@@ -134,7 +134,7 @@
             ///load first page
             do {
                 pages++;
-                imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar(1);" alt="kosong" src="'+data.meta.url+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-1]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
+                imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar(1);" alt="kosong" src="'+data.meta.url_m+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-1]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
                 $("#mediaLayout").append(imageshtml);
             }
             while (pages < 1);
