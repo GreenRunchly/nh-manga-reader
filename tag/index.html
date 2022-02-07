@@ -79,7 +79,7 @@
 </body>
 <script type="text/javascript">
     lamanDituju = window.location.search;
-    $.post("http://nh.local/tag-page.php" + lamanDituju,{}, function(data, status){
+    $.post("https://nh.greenrunchly.my.id/tag-page.php" + lamanDituju,{}, function(data, status){
         if (data.status == 200){
             console.log(data);
             $('#meta-title').html(data.meta.title);
