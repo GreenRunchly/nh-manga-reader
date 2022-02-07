@@ -1,0 +1,181 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title id="meta-title"></title>
+    <meta name="title" id="meta-title" content="">
+    <meta name="description" content="NH Browser, just input the code and voila!">
+    <meta name="keywords" id="meta-keywords" content="NH Browser, images downloader, nhentai downloader, nhentai reader,">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" id="meta-fb-url" content="">
+    <meta property="og:title" id="meta-fb-title" content="">
+    <meta property="og:description" content="NH Browser, just input the code and voila!">
+    <meta property="og:image" id="meta-fb-img" content="">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" id="meta-twitter-url" content="">
+    <meta property="twitter:title" id="meta-twitter-title" content="">
+    <meta property="twitter:description" content="NH Browser, just input the code and voila!">
+    <meta property="twitter:image" id="meta-twitter-img" content="">
+    
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../style/style.css?ver=1">
+	<script src="../style/script.js?ver=1"></script>
+
+</head>
+<style>
+    html{
+        margin:0px;
+        padding:0px;
+    }
+    body{
+        margin:0px;
+        padding:0px;
+    }
+    img{
+        width:100%;
+    }
+</style>
+<body>
+    <div class="modal off toggle" toggle="modalpesan" id="modalpesan">
+        <div class="modal-content">
+            <p>Kode disalin!</p>
+        </div>
+    </div>
+    <div class="modal off toggle" toggle="modalmaintenance" id="modalmaintenance">
+        <div class="modal-content">
+            <h2>Pengumuman!</h2>
+            <p>Kami melakukan migrasi ke server Github walau tidak secepat yang dibayangkan, setidaknya bisa berjalan selamanya, terimakasih sudah berkunjung, selamat membaca.</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        appSettingsLoad();
+        deleteData('maintenance');
+    </script>
+    <div class="header-layout">
+        <div class="navbar">
+            <div class="navbar-left-non">
+                
+            </div>
+            <form class="navbar-center" method="GET">
+                <input type="text" id="codeinput" placeholder="Insert Code" name="q" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" value="">
+            </form>
+            <div class="navbar-right">
+                <a class="navbar-button" href="/g"><i class="fal fa-repeat"></i></a>
+                <a class="navbar-button" href="/search"><i class="fal fa-search"></i></a>
+                <a class="navbar-button" href="/" ><i class="fal fa-fire"></i></a>
+            </div>
+        </div>
+        <div class="header-layout-top">
+            <h1 id="titleManga"></h1>
+        </div>
+        <div class="header-layout-bottom">
+            <h2><span id="totalPagesManga"></span> Pages</h2>
+            <p id="tagsManga">
+                <a href="/tag?q=<?php echo $value['url']; ?>" ></a>
+            </p>
+        </div>
+    </div>
+    <div id="mediaLayout" class="tiles-gallery"></div>
+    <div class="load-button-container">
+        <div class="load-button loadmore loadmore-button" perhalaman="1"><p>1 Page</p> <i class="far fa-plus-circle"></i></div>
+        <div class="load-button loadmore loadmore-button" perhalaman="2"><p>2 Page</p> <i class="far fa-plus-circle"></i></div>
+        <div class="load-button loadmore loadmore-button" perhalaman="5"><p>5 Page</p> <i class="far fa-plus-circle"></i></div>
+        <div class="load-button loadmore loadmore-button" perhalaman="10"><p>10 Page</p> <i class="far fa-plus-circle"></i></div>
+        <div class="load-button loadmore loadmore-button" perhalaman="20"><p>20 Page</p> <i class="far fa-plus-circle"></i></div>
+    </div>
+</body>
+<script type="text/javascript">
+    var mediaId = 0;
+    var pagesTotal = 0;
+    var pages = 0;
+    var pagesLeft = pagesTotal - pages;
+
+    lamanDituju = window.location.search;
+    $.post("http://nh.local/g-page.php" + lamanDituju,{}, function(data, status){
+        if (data.status == 200){
+            console.log(data);
+            $('#meta-title').html(data.meta.title);
+            $('#meta-keywords').html(data.meta.keywords);
+            $('#meta-fb-url').attr('content',data.meta.url);
+            $('#meta-fb-title').attr('content',data.meta.title);
+            $('#meta-fb-img').attr('content',data.meta.ogimage);
+            $('#meta-twitter-url').attr('content',data.meta.url);
+            $('#meta-twitter-title').attr('content',data.meta.title);
+            $('#meta-twitter-img').attr('content',data.meta.ogimage);
+
+            $('#titleManga').html(data.title.title);
+            $('#totalPagesManga').html(data.gallery.num_pages);
+            $('#codeinput').val(data.gallery.id);
+            
+            tags = '';
+            $.each(data.gallery.tags, function( index, value ) {
+                if (value.type == 'tag'){
+                    tags += '<a href="'+data.meta.url+'/tag?q='+value.url+'" >'+value.name+'</a>';
+                }
+            });        
+            $('#tagsManga').append(tags); 
+
+            media = '';
+            $.each(data.listing, function( index, value ) {
+                media += '<a class="media-gallery" href="/g?q='+index+'"><div class="media-gallery-thumb"><img src="'+data.meta.url+'/get-cover.php?media='+value.cover+'"></div><div class="media-gallery-desc"><h2>'+value.caption+'...</h2></div></a>';
+            });        
+            $('#mediaLayout').append(media); 
+
+            mediaId = data.gallery.media_id;
+            pagesTotal = data.gallery.num_pages;
+            pages = 0;
+            pagesLeft = pagesTotal - pages;
+            
+            ///load first page
+            do {
+                pages++;
+                imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar(1);" alt="kosong" src="'+data.meta.url+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-1]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
+                $("#mediaLayout").append(imageshtml);
+            }
+            while (pages < 1);
+            
+            $(document).on('click','.salinInput',function(e){
+                salinInput();
+                getPesan('Berhasil di salin! :D');
+            });
+            $(document).on('click','.loadmore-button',function(e){
+                var perHalaman = $(this).attr('perhalaman');
+                if (perHalaman == null){ perHalaman = 1; }
+                if (pages <= pagesTotal){
+                    for (i=1; i <= perHalaman; i++) { 
+                        pages++;
+                        imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar('+perHalaman+');" alt="kosong" src="'+data.meta.url+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-2]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
+                        $("#mediaLayout").append(imageshtml);
+                    }
+                    $(".loadmore[perhalaman="+perHalaman+"] i").removeClass('far fa-plus-circle');
+                    $(".loadmore[perhalaman="+perHalaman+"] i").addClass('fad fa-spinner-third');
+                    $(".loadmore").removeClass('loadmore-button');
+                    $(".loadmore[perhalaman="+perHalaman+"] p").html('Please Wait..');
+                }
+            });
+            
+        }
+    });
+    function statusGambar(perHalaman){
+        var perHalamanButton = [1,2,5,10,20];
+        perHalamanButton.forEach(function (item, index) {
+            if (pagesLeft > item){
+                $(".loadmore[perhalaman="+item+"] i").removeClass('fad fa-spinner-third');
+                $(".loadmore[perhalaman="+item+"] i").addClass('far fa-plus-circle');
+                $(".loadmore").addClass('loadmore-button');
+                $(".loadmore[perhalaman="+item+"] p").html(item + ' Page');
+                $("#mediaPages-"+(pages)+" .media-page-label").html('Page '+pages);
+            }else{
+                $(".loadmore[perhalaman="+item+"]").remove();
+            }
+        });
+        pagesLeft = pagesTotal - pages;
+        console.log(pages+'-'+pagesLeft);
+    };
+
+</script>

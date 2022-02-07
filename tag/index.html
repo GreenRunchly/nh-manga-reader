@@ -67,7 +67,7 @@
             <div class="navbar-right">
                 <a class="navbar-button" href="/g"><i class="fal fa-repeat"></i></a>
                 <a class="navbar-button" href="/search"><i class="fal fa-search"></i></a>
-                <a class="navbar-button" href="https://trakteer.id/greenrunchly/tip" ><i class="fal fa-gift"></i></a>
+                <a class="navbar-button" href="/" ><i class="fal fa-fire"></i></a>
             </div>
         </div>
         <div class="header-layout-top">
@@ -79,7 +79,7 @@
 </body>
 <script type="text/javascript">
     lamanDituju = window.location.search;
-    $.post("http://nh.local/popular-page.php" + lamanDituju,{}, function(data, status){
+    $.post("http://nh.local/tag-page.php" + lamanDituju,{}, function(data, status){
         if (data.status == 200){
             console.log(data);
             $('#meta-title').html(data.meta.title);
