@@ -149,7 +149,7 @@
                 if (pages <= pagesTotal){
                     for (i=1; i <= perHalaman; i++) { 
                         pages++;
-                        imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar('+perHalaman+');" alt="kosong" src="'+data.meta.url+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-2]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
+                        imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar('+perHalaman+');" alt="kosong" src="'+data.meta.url_m+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-2]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
                         $("#mediaLayout").append(imageshtml);
                     }
                     $(".loadmore[perhalaman="+perHalaman+"] i").removeClass('far fa-plus-circle');
