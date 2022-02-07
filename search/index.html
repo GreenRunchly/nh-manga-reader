@@ -101,7 +101,7 @@
             
             pagination = '';
             $.each(data.pagination, function( index, value ) {
-                pagination += '<a class="load-button" href="?q='+data.title.title+'p='+index+'"><p>'+value.caption+'</p></a>';
+                pagination += '<a class="load-button" href="?q='+data.title.title+'&p='+index+'"><p>'+value.caption+'</p></a>';
             });        
             $('#paginationLayout').append(pagination); 
 
