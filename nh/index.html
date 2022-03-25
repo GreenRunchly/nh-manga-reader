@@ -1,0 +1,110 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title id="meta-title"></title>
+    <meta name="title" id="meta-title" content="">
+    <meta name="description" content="NH Browser, just input the code and voila!">
+    <meta name="keywords" id="meta-keywords" content="NH Browser, images downloader, nhentai downloader, nhentai reader,">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" id="meta-fb-url" content="">
+    <meta property="og:title" id="meta-fb-title" content="">
+    <meta property="og:description" content="NH Browser, just input the code and voila!">
+    <meta property="og:image" id="meta-fb-img" content="">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" id="meta-twitter-url" content="">
+    <meta property="twitter:title" id="meta-twitter-title" content="">
+    <meta property="twitter:description" content="NH Browser, just input the code and voila!">
+    <meta property="twitter:image" id="meta-twitter-img" content="">
+    
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../style/style.css?ver=1">
+	<script src="../style/script.js?ver=1"></script>
+
+</head>
+<style>
+    html{
+        margin:0px;
+        padding:0px;
+    }
+    body{
+        margin:0px;
+        padding:0px;
+    }
+    img{
+        width:100%;
+    }
+</style>
+<body>
+    <div class="modal off toggle" toggle="modalpesan" id="modalpesan">
+        <div class="modal-content">
+            <p>Kode disalin!</p>
+        </div>
+    </div>
+    <div class="modal off toggle" toggle="modalmaintenance" id="modalmaintenance">
+        <div class="modal-content">
+            <h2>Pengumuman!</h2>
+            <p>Kami melakukan migrasi ke server Github walau tidak secepat yang dibayangkan, setidaknya bisa berjalan selamanya, terimakasih sudah berkunjung, selamat membaca.</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        appSettingsLoad();
+        deleteData('maintenance');
+    </script>
+    <div class="header-layout">
+        <div class="navbar">
+            <div class="navbar-left-non">
+                
+            </div>
+            <form class="navbar-center" method="GET" action="/search">
+                <input type="text" id="codeinput" placeholder="Keyword" name="q" value="">
+            </form>
+            <div class="navbar-right">
+                <a class="navbar-button" href="/g"><i class="fal fa-repeat"></i></a>
+                <a class="navbar-button" href="/search"><i class="fal fa-search"></i></a>
+                <a class="navbar-button" href="https://trakteer.id/greenrunchly/tip" ><i class="fal fa-gift"></i></a>
+            </div>
+        </div>
+        <div class="header-layout-top">
+            <h1 id="titleManga"></h1>
+        </div>
+    </div>
+    <div id="mediaLayout" class="tiles-gallery"></div>
+    <div id="paginationLayout" class="load-button-container"></div>
+</body>
+<script type="text/javascript">
+    lamanDituju = window.location.search;
+    $.post("https://nh.greenrunchly.my.id/popular-page.php" + lamanDituju,{}, function(data, status){
+        if (data.status == 200){
+            console.log(data);
+            $('#meta-title').html(data.meta.title);
+            $('#meta-keywords').html(data.meta.keywords);
+            $('#meta-fb-url').attr('content',data.meta.url);
+            $('#meta-fb-title').attr('content',data.meta.title);
+            $('#meta-fb-img').attr('content',data.meta.ogimage);
+            $('#meta-twitter-url').attr('content',data.meta.url);
+            $('#meta-twitter-title').attr('content',data.meta.title);
+            $('#meta-twitter-img').attr('content',data.meta.ogimage);
+
+            $('#titleManga').html(data.title.title);
+
+            
+            pagination = '';
+            $.each(data.pagination, function( index, value ) {
+                pagination += '<a class="load-button" href="?p='+index+'"><p>'+value.caption+'</p></a>';
+            });        
+            $('#paginationLayout').append(pagination); 
+
+            media = '';
+            $.each(data.listing, function( index, value ) {
+                media += '<a class="media-gallery" href="/g?q='+index+'"><div class="media-gallery-thumb"><img src="'+data.meta.url_m+'/get-cover.php?media='+value.cover+'"></div><div class="media-gallery-desc"><h2>'+value.caption+'...</h2></div></a>';
+            });        
+            $('#mediaLayout').append(media); 
+        }
+    });
+</script>
