@@ -126,6 +126,7 @@ label{
     color:white;
     font-weight:normal;
     text-align:center;
+    word-break: break-all;
 }
 .header-layout-bottom{
     display:flex;

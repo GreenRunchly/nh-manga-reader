@@ -85,8 +85,6 @@
         <div class="load-button loadmore loadmore-button" perhalaman="1"><p>1 Page</p> <i class="far fa-plus-circle"></i></div>
         <div class="load-button loadmore loadmore-button" perhalaman="2"><p>2 Page</p> <i class="far fa-plus-circle"></i></div>
         <div class="load-button loadmore loadmore-button" perhalaman="5"><p>5 Page</p> <i class="far fa-plus-circle"></i></div>
-        <div class="load-button loadmore loadmore-button" perhalaman="10"><p>10 Page</p> <i class="far fa-plus-circle"></i></div>
-        <div class="load-button loadmore loadmore-button" perhalaman="20"><p>20 Page</p> <i class="far fa-plus-circle"></i></div>
     </div>
 </body>
 <script type="text/javascript">
@@ -96,7 +94,7 @@
     var pagesLeft = pagesTotal - pages;
 
     lamanDituju = window.location.search;
-    $.post("https://nh.greenrunchly.my.id/g-page.php" + lamanDituju,{}, function(data, status){
+    $.post(appLinkServer+"/g-page.php" + lamanDituju,{}, function(data, status){
         if (data.status == 200){
             console.log(data);
             $('#meta-title').html(data.meta.title);
@@ -122,7 +120,7 @@
 
             media = '';
             $.each(data.listing, function( index, value ) {
-                media += '<a class="media-gallery" href="/g?q='+index+'"><div class="media-gallery-thumb"><img src="'+data.meta.url_m+'/get-cover.php?media='+value.cover+'"></div><div class="media-gallery-desc"><h2>'+value.caption+'...</h2></div></a>';
+                media += '<a class="media-gallery" href="/g?q='+index+'"><div class="media-gallery-thumb"><img src="'+appLinkServer+'/get-cover.php?media='+value.cover+'"></div><div class="media-gallery-desc"><h2>'+value.caption+'...</h2></div></a>';
             });        
             $('#mediaLayout').append(media); 
 
@@ -134,7 +132,7 @@
             ///load first page
             do {
                 pages++;
-                imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar(1);" alt="kosong" src="'+data.meta.url_m+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-1]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
+                imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar(1);" alt="kosong" src="'+appLinkServer+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-1]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
                 $("#mediaLayout").append(imageshtml);
             }
             while (pages < 1);
@@ -149,7 +147,7 @@
                 if (pages <= pagesTotal){
                     for (i=1; i <= perHalaman; i++) { 
                         pages++;
-                        imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar('+perHalaman+');" alt="kosong" src="'+data.meta.url_m+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-2]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
+                        imageshtml = '<div class="mediaPages" id="mediaPages-'+pages+'" ><div class="media-page-label">Loading...</div><img onload="statusGambar('+perHalaman+');" alt="kosong" src="'+appLinkServer+'/get-images.php?mediaid='+mediaId+'&pagesid='+pages+'&mediatype='+data.gallery.images.pages[pages-2]["t"]+'" class="mediaPagesImages" id="mediaPagesImages-'+pages+'"></div>';
                         $("#mediaLayout").append(imageshtml);
                     }
                     $(".loadmore[perhalaman="+perHalaman+"] i").removeClass('far fa-plus-circle');
@@ -162,7 +160,7 @@
         }
     });
     function statusGambar(perHalaman){
-        var perHalamanButton = [1,2,5,10,20];
+        var perHalamanButton = [1,2,5];
         perHalamanButton.forEach(function (item, index) {
             if (pagesLeft > item){
                 $(".loadmore[perhalaman="+item+"] i").removeClass('fad fa-spinner-third');

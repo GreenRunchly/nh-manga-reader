@@ -1,3 +1,7 @@
+/* Variable */
+var appLink = 'http://nhentai.local';
+var appLinkServer = 'https://rizkiirfananshori-games.000webhostapp.com';
+var appPremium = false;
 /* System Functions */
 function setData(input,pada){
     /* simpan data */
@@ -20,6 +24,7 @@ function appSettingsLoad(){
         $("#modalmaintenance").removeClass("off");
         $("#modalmaintenance").addClass("on");
     }
+    var appPremium = loadData('premium');
     //console.log(maintenance);
     console.log('Settings Loaded');
 }

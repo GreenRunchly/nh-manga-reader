@@ -79,7 +79,7 @@
 </body>
 <script type="text/javascript">
     lamanDituju = window.location.search;
-    $.post("https://nh.greenrunchly.my.id/tag-page.php" + lamanDituju,{}, function(data, status){
+    $.post(appLinkServer+"/tag-page.php" + lamanDituju,{}, function(data, status){
         if (data.status == 200){
             console.log(data);
             $('#meta-title').html(data.meta.title);
@@ -102,7 +102,7 @@
 
             media = '';
             $.each(data.listing, function( index, value ) {
-                media += '<a class="media-gallery" href="/g?q='+index+'"><div class="media-gallery-thumb"><img src="'+data.meta.url_m+'/get-cover.php?media='+value.cover+'"></div><div class="media-gallery-desc"><h2>'+value.caption+'...</h2></div></a>';
+                media += '<a class="media-gallery" href="/g?q='+index+'"><div class="media-gallery-thumb"><img src="'+appLinkServer+'/get-cover.php?media='+value.cover+'"></div><div class="media-gallery-desc"><h2>'+value.caption+'...</h2></div></a>';
             });        
             $('#mediaLayout').append(media); 
         }
