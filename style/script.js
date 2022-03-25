@@ -1,5 +1,5 @@
 /* Variable */
-var appLink = 'http://nhentai.local';
+var appLink = 'https://nhentai.my.id';
 var appLinkServer = 'https://rizkiirfananshori-games.000webhostapp.com';
 var appPremium = false;
 /* System Functions */

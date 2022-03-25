@@ -1,6 +1,6 @@
 <?php
 
-    define('URL_SITUS_MASTER', 'http://nhentai.local');
+    define('URL_SITUS_MASTER', 'https://nhentai.my.id');
     define('URL_SITUS', 'https://rizkiirfananshori-games.000webhostapp.com');
     define('DIR_SITUS', $_SERVER['DOCUMENT_ROOT']);
 
